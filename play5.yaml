@@ -1,6 +1,6 @@
 ---
-- hosts: tomcat
-  remote_user: root
+- hosts: nodes
+  remote_user: ubuntu
   become: yes
   tasks:
   - name: installing tomcat CentOS
@@ -23,16 +23,6 @@
       name: tomcat9
       state: started
     when:  ansible_facts['os_family'] == "Debian"
-  - name: configuration of tomcat CentOS
-    copy:
-      src: /root/tomcat.config
-      dest: /etc/tomcat/tomcat-users.xml
-    when:  ansible_facts['os_family'] == "RedHat"
-  - name: configuration of tomcat Ubuntu
-    copy:
-      src: /root/tomcat.config
-      dest: /etc/tomcat9/tomcat-users.xml
-    when:  ansible_facts['os_family'] == "Debian"
   - name: starting up tomcat CentOS 
     service:
       name: tomcat
@@ -45,12 +35,12 @@
     when:  ansible_facts['os_family'] == "Debian"
   - name: copying addressbook file CentOS
     copy:
-      src: /root/jenkins/workspace/step1/addressbook_main/target/addressbook.war
+      src: /home/ubuntu/jenkins/workspace/projects1/addressbook_main/target/addressbook.war
       dest: /usr/share/tomcat/webapps
     when:  ansible_facts['os_family'] == "RedHat"
   - name: copying addressbook file Ubuntu
     copy:
-      src: /root/jenkins/workspace/step1/addressbook_main/target/addressbook.war
+      src: /home/ubuntu/jenkins/workspace/projects1/addressbook_main/target/addressbook.war
       dest: /var/lib/tomcat9/webapps
     when:  ansible_facts['os_family'] == "Debian"
   - name: starting up tomcat CentOS 
