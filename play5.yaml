@@ -5,11 +5,11 @@
   tasks:
   - name: Creating a Directory
     file:
-      path: /root/gitrepo
+      path: /home/ubuntu/gitrepo
       state: directory
       
   - name: Installing git on Debian flavour
-    yum:
+    apt:
       name: git
       state: present
       update_cache: yes
@@ -18,7 +18,7 @@
   - name: Cloning playbook from repo
     ansible.builtin.git:
       repo: https://github.com/finnatul/ansible-repo.git
-      dest: /root/gitrepo
+      dest: /home/ubuntu/gitrepo
       
   - name: installing tomcat CentOS
     package:
