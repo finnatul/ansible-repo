@@ -44,13 +44,11 @@
     when:  ansible_facts['os_family'] == "Debian"
   - name: copying war file CentOS
     copy:
-      remote_src: yes
       src: /root/newgit/adressbook.war
       dest: /usr/share/tomcat/webapps
     when:  ansible_facts['os_family'] == "RedHat"
   - name: copying war file Ubuntu
     copy:
-      remote_src: yes
       src: /home/ubuntu/newgit/adressbook.war
       dest: /var/lib/tomcat9/webapps
     when:  ansible_facts['os_family'] == "Debian"
