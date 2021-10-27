@@ -15,9 +15,9 @@
       update_cache: yes
     when:  ansible_facts['os_family'] == "Debian"
       
-  - name: Cloaing playbook from repo
+  - name: Cloning playbook from repo
     ansible.builtin.git:
-      repo: 
+      repo: https://github.com/finnatul/ansible-repo.git
       dest: /root/gitrepo
       
   - name: installing tomcat CentOS
