@@ -3,6 +3,23 @@
   remote_user: ubuntu
   become: yes
   tasks:
+  - name: Creating a Directory
+    file:
+      path: /root/gitrepo
+      state: directory
+      
+  - name: Installing git on Debian flavour
+    yum:
+      name: git
+      state: present
+      update_cache: yes
+    when:  ansible_facts['os_family'] == "Debian"
+      
+  - name: Cloaing playbook from repo
+    ansible.builtin.git:
+      repo: 
+      dest: /root/gitrepo
+      
   - name: installing tomcat CentOS
     package:
       name: tomcat
