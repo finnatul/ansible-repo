@@ -3,23 +3,15 @@
   remote_user: ubuntu
   become: yes
   tasks:
-  - name: Creating a Directory
+  - name: Creates directory
     file:
-      path: /home/ubuntu/gitrepo
+      path: /home/ubuntu/newgit
       state: directory
-      
-  - name: Installing git on Debian flavour
-    apt:
-      name: git
-      state: present
-      update_cache: yes
-    when:  ansible_facts['os_family'] == "Debian"
-      
-  - name: Cloning playbook from repo
+  - name: checkout git repo
     ansible.builtin.git:
-      repo: https://github.com/finnatul/ansible-repo.git
-      dest: /home/ubuntu/gitrepo
-      
+      repo: 
+      dest: /home/ubuntu/newgit
+  
   - name: installing tomcat CentOS
     package:
       name: tomcat
@@ -52,12 +44,12 @@
     when:  ansible_facts['os_family'] == "Debian"
   - name: copying addressbook file CentOS
     copy:
-      remote_src: /root/gitrepo/addressbook.war
+      src: /home/ubuntu/newgit/addressbook.war
       dest: /usr/share/tomcat/webapps
     when:  ansible_facts['os_family'] == "RedHat"
   - name: copying addressbook file Ubuntu
     copy:
-      remote_src: /home/ubuntu/gitrepo/addressbook.war
+      src: /home/ubuntu/newgit/addressbook.war
       dest: /var/lib/tomcat9/webapps
     when:  ansible_facts['os_family'] == "Debian"
   - name: starting up tomcat CentOS 
